@@ -1,0 +1,15 @@
+<launch>
+
+	<arg name="model" default="$(find robot_arm_simulator)/urdf/robot_arm.urdf"/>
+
+	<arg name="rvizconfig" default="$(find robot_arm_simulator)/rviz/urdf.rviz" />
+
+	<param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
+
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+		<rosparam param="source_list">["joint_states_interpolated"]</rosparam>
+	</node>
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+</launch>
